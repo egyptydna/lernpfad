@@ -1,0 +1,14 @@
+{
+  "name": "Lernpfad",
+  "build": { "dockerfile": "Dockerfile" },
+  "remoteUser": "node",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Lernpfad", "onAutoForward": "openBrowser" }
+  },
+  "containerEnv": {
+    "CHATGPT_LOCAL": "false",
+    "COOKIE_SECURE": "true"
+  },
+  "postCreateCommand": "node scripts/setup-codespaces.mjs"
+}

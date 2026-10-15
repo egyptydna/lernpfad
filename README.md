@@ -1,6 +1,8 @@
-# Lernpfad 1.3
+# Lernpfad 1.3.1
 
 Eine tatsächlich arbeitende KI-Lernplattform: private Konten, dauerhaft gespeicherte Originaldateien, gemeinsame Kurse aus mehreren Dokumenten, dokumentbasierter Tutor, zwölf Aufgabenkategorien, fünf Lernphasen, adaptive Folgeaufgaben, Prüfungen, Wiederholung, XP und Statistiken.
+
+Datei-Uploads werden in 1-MB-Teilstücken übertragen, bei Verbindungsfehlern bis zu zweimal wiederholt und mit einer Fortschrittsanzeige versehen. Die Grenze bleibt 25 MB pro Datei. Ein erneuter Abschluss derselben Übertragung erzeugt keine doppelten Dokumente. Unvollständige Uploads sind pro Konto getrennt und werden beim nächsten Upload nach 24 Stunden entfernt.
 
 ## Lernen mit deinem bestehenden ChatGPT-Abo, ohne API-Schlüssel
 

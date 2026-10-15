@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import ChatGPTConnection from "./chatgpt-connection";
 import CourseTransfer from "./course-transfer";
+import { uploadDocuments } from "./upload-client";
 import {
   BookOpen,
   LayoutDashboard,
@@ -3111,6 +3112,7 @@ function UploadModal({
   const [files, setFiles] = useState<File[]>([]),
     [courseId, setCourseId] = useState(""),
     [busy, setBusy] = useState(false),
+    [progress, setProgress] = useState(""),
     [error, setError] = useState(""),
     [drag, setDrag] = useState(false);
   const input = useRef<HTMLInputElement>(null);
@@ -3219,7 +3221,12 @@ function UploadModal({
             ))}
           </select>
         </label>
-        {error && <div className="inline-error">{error}</div>}
+        {error && (
+          <div className="inline-error" role="alert">
+            {error}
+          </div>
+        )}
+        {busy && <p role="status">{progress}</p>}
         <div className="modal-footer">
           <span>
             <LockKeyhole size={13} /> Privat & dauerhaft gespeichert
@@ -3231,15 +3238,7 @@ function UploadModal({
               setBusy(true);
               setError("");
               try {
-                const form = new FormData();
-                files.forEach((f) => form.append("files", f));
-                form.set("courseId", courseId);
-                const r = await fetch("/api/upload", {
-                  method: "POST",
-                  body: form,
-                });
-                const data = await r.json();
-                if (!r.ok) throw new Error(data.error);
+                await uploadDocuments(files, courseId, setProgress);
                 await onSuccess();
               } catch (e: any) {
                 setError(e.message);

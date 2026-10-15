@@ -1,3 +1,4 @@
+import { saveChunk, assembleUpload, removeUpload } from "@/lib/upload";
 import { exportForChatGPT, importChatGPTCourse } from "@/lib/course-transfer";
 import { allowedRequestOrigin } from "@/lib/request-origin.mjs";
 import {
@@ -272,9 +273,38 @@ async function handle(
       !["state", "document", "question", "export"].includes(route)
     )
       return json({ error: "Methode nicht erlaubt." }, 405);
-    if (route === "upload") {
+    if (route === "upload/chunk" && req.method === "POST") {
+      return json(await saveChunk(uid, await req.formData()));
+    }
+    if (route === "upload" && req.method === "POST") {
       const form = await req.formData();
-      const files = form.getAll("files") as File[];
+      const uploadIds = form.has("uploadIds")
+        ? z
+            .array(z.string().uuid())
+            .min(1)
+            .max(10)
+            .parse(JSON.parse(String(form.get("uploadIds"))))
+        : [];
+      const uploadId = uploadIds[0];
+      if (
+        uploadId &&
+        uploadIds.every((id) => w.documents.some((d) => d.id === id))
+      ) {
+        await enqueue(
+          uid,
+          "ingest",
+          {
+            documentIds: uploadIds,
+            courseId: w.documents.find((d) => d.id === uploadId)?.courseId,
+            newCourseId: uploadId,
+          },
+          "ingest:" + uid + ":" + uploadId,
+        );
+        return json({ ids: uploadIds });
+      }
+      const files = uploadId
+        ? await Promise.all(uploadIds.map((id) => assembleUpload(uid, id)))
+        : (form.getAll("files") as File[]);
       if (!files.length || files.length > 10)
         throw new Error("Bitte 1 bis 10 Dateien auswählen.");
       if (w.documents.length + files.length > 100)
@@ -293,11 +323,15 @@ async function handle(
             "Erlaubt: PDF, DOCX, PPTX, TXT, PNG und JPG, maximal 25 MB pro Datei.",
           );
       }
-      const batchId = crypto.randomUUID();
-      const newCourseId = crypto.randomUUID();
+      const batchId = uploadId || crypto.randomUUID();
+      const newCourseId = uploadId || crypto.randomUUID();
       const uploaded = [];
-      for (const file of files) {
-        const id = crypto.randomUUID();
+      for (const [fileIndex, file] of files.entries()) {
+        const id = uploadIds[fileIndex] || crypto.randomUUID();
+        if (w.documents.some((d) => d.id === id)) {
+          uploaded.push(id);
+          continue;
+        }
         const target = storedPath(uid, id);
         await fs.mkdir(path.dirname(target), { recursive: true });
         await fs.writeFile(target, Buffer.from(await file.arrayBuffer()));
@@ -324,6 +358,7 @@ async function handle(
         { documentIds: uploaded, courseId: courseId || undefined, newCourseId },
         "ingest:" + uid + ":" + batchId,
       );
+      await Promise.all(uploadIds.map((id) => removeUpload(uid, id)));
       return json({ ids: uploaded });
     }
     if (route === "document") {

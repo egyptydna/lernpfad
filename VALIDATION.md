@@ -1,6 +1,10 @@
-# Validierung – Lernpfad 1.3
+# Validierung – Lernpfad 1.3.1
 
 Stand: 15. Oktober 2026.
+
+## Upload großer Dokumente (1.3.1)
+
+`npm run test:upload` überträgt eine synthetische PDF mit 106 Seiten und rund 20 MB in 1-MB-Teilstücken. Geprüft werden bytegleiche Originalspeicherung, alle 106 ausgelesenen Seiten, Export der Seiten 100–106, wiederholte Teilstücke und idempotenter Abschluss, Ablehnung unvollständiger Uploads und Kontentrennung. Zusätzlich besteht der echte Upload derselben 20-MB-PDF über das Formular in Chromium mit Touch-Bedienung und Tablet-Viewport (1024 × 768), ohne JavaScript-Seitenfehler. Alle 27 bisherigen Tests, TypeScript-Prüfung und Produktions-Build bestehen. Das beweist den lokalen Verarbeitungspfad; die konkrete Safari-/Codespaces-Verbindung des Nutzers kann hier nicht ferngesteuert geprüft werden.
 
 ## Manueller ChatGPT-Dateiweg (1.3)
 
@@ -76,3 +80,4 @@ Die beim Audit beobachteten hohen Einträge für PDF.js und PostCSS und der nied
 Kein echter OpenAI-Schlüssel und keine persönliche ChatGPT-OAuth-Freigabe sind verbunden. Die Integrationstests verwenden einen isolierten OpenAI-kompatiblen Testanbieter; sie sind kein Nachweis für die fachliche Qualität realer Modellantworten oder die reale OCR-Erkennungsqualität. Die Anwendung selbst enthält keine entsprechenden Testantworten oder simulierte KI-Funktionen.
 
 Eine öffentliche Bereitstellung und Tests unter einer eigenen HTTPS-Domain sind mangels verbundenem Hostingkonto noch nicht erfolgt. Weitere Funktions- und Betriebsgrenzen stehen in der README.
+

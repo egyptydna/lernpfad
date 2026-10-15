@@ -10,3 +10,5 @@ node_modules/
 .buildx/
 
 .next-origin-*/
+
+.next-transfer-*/

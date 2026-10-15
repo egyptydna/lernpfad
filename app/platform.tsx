@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import ChatGPTConnection from "./chatgpt-connection";
+import CourseTransfer from "./course-transfer";
 import {
   BookOpen,
   LayoutDashboard,
@@ -1131,6 +1132,17 @@ export default function Platform() {
               )}
               {view === "documents" && (
                 <>
+                  {account && (
+                    <CourseTransfer
+                      documents={w.documents}
+                      onImported={async (id) => {
+                        await reload();
+                        setCourseId(id);
+                        go("courses");
+                      }}
+                    />
+                  )}
+
                   <div className="info-banner">
                     <span className="stat-icon lilac">
                       <Sparkles size={21} />
@@ -1196,7 +1208,20 @@ export default function Platform() {
                                 <Check size={12} /> Bereit
                               </span>
                             ) : d.status === "error" ? (
-                              <span className="pill red">Fehler</span>
+                              <span
+                                className={
+                                  "pill " +
+                                  (d.extractedAt &&
+                                  d.error?.includes("OPENAI_API_KEY")
+                                    ? "amber"
+                                    : "red")
+                                }
+                              >
+                                {d.extractedAt &&
+                                d.error?.includes("OPENAI_API_KEY")
+                                  ? "Text bereit · Kurs ausstehend"
+                                  : "Fehler"}
+                              </span>
                             ) : (
                               <>
                                 <span className="pill purple">
@@ -1208,7 +1233,10 @@ export default function Platform() {
                             )}
                             {d.error && (
                               <p>
-                                {d.error}
+                                {d.extractedAt &&
+                                d.error?.includes("OPENAI_API_KEY")
+                                  ? "Dein Text ist gespeichert. Du kannst ihn oben als Lernauftrag für ChatGPT exportieren und den fertigen Kurs wieder importieren."
+                                  : d.error}
                                 <button
                                   className="text-button"
                                   onClick={() =>
@@ -3114,9 +3142,10 @@ function UploadModal({
           <div className="alert warning">
             <CircleHelp size={20} />
             <span>
-              Der Server benötigt noch einen OPENAI_API_KEY. Dateien können
-              gespeichert werden; die KI-Analyse ist erst nach der Konfiguration
-              möglich.
+              Ohne KI-Zugang werden Dateien und lesbare Texte gespeichert. Unter
+              „Meine Dokumente“ kannst du einen Lernauftrag für ChatGPT
+              exportieren und den fertigen Kurs importieren. Eine automatische
+              KI-Analyse benötigt weiterhin eine eingerichtete Verbindung.
             </span>
           </div>
         )}

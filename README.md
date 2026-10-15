@@ -1,6 +1,22 @@
-# Lernpfad 1.2
+# Lernpfad 1.3
 
 Eine tatsächlich arbeitende KI-Lernplattform: private Konten, dauerhaft gespeicherte Originaldateien, gemeinsame Kurse aus mehreren Dokumenten, dokumentbasierter Tutor, zwölf Aufgabenkategorien, fünf Lernphasen, adaptive Folgeaufgaben, Prüfungen, Wiederholung, XP und Statistiken.
+
+## Lernen mit deinem bestehenden ChatGPT-Abo, ohne API-Schlüssel
+
+Version 1.3 enthält einen manuellen Dateiweg. Er verbindet diesen Chat nicht automatisch mit der Website.
+
+1. In der Plattform anmelden und Unterlagen hochladen. Bei normalen Text-PDFs, TXT, DOCX und PPTX wird der Text auch ohne KI-Zugang ausgelesen. Der Status „Text bereit · Kurs ausstehend“ reicht für den Export.
+2. Unter **Meine Dokumente → Mit ChatGPT lernen – ohne API-Schlüssel** die Unterlagen und einen Seitenbereich auswählen. Auf **1. Lernauftrag exportieren** tippen.
+3. Die heruntergeladene Datei `ChatGPT-Lernauftrag.json` hier in ChatGPT anhängen und schreiben: **„Bitte erstelle daraus die angeforderte Kursdatei.“** Die Datei enthält den ausgewählten Text, die Quellenkennungen und das erforderliche Ausgabeformat. Es werden keine Passwörter, Antworten, Lernstatistiken oder Chatverläufe exportiert.
+4. Die von ChatGPT erzeugte Datei `lernpfad-kurs.json` herunterladen. In der Plattform auf **2. Fertige Kursdatei importieren** tippen und die Datei auswählen.
+5. Erklärungen und die importierten objektiven Aufgaben lernen. Ihre Bewertung, XP und Speicherung benötigen keinen API-Zugang. Der identische Kurs wird beim erneuten Import nicht doppelt angelegt.
+
+Die Nutzung hier in ChatGPT unterliegt deinem bestehenden Abo und dessen Grenzen. Der Dateiweg löst selbst keine KI-API-Anfragen aus. Das Importieren prüft Quellen gegen deine gespeicherten Unterlagen und weist fremde Dokumente, unbelegbare Zitate, doppelte Fragen und unpassende Antwortoptionen ab. Eine inhaltliche Fehlerfreiheit von ChatGPT-Ausgaben kann diese formale Prüfung nicht garantieren.
+
+Unterstützte automatische Aufgabenbewertungen für diesen Weg: Single-/Multiple-Choice, Richtig/Falsch, Lückentexte, Zuordnungen, Verbindungen und Reihenfolgen. Tutor-Chat auf der Website, automatisch neue Aufgaben, semantische Freitextbewertungen und OCR benötigen weiterhin einen eingerichteten KI-Zugang. Bilder und Scan-PDFs ohne vollständig ausgelesenen Text werden nicht stillschweigend als gelesene Unterlagen exportiert.
+
+Die vorgeschlagene automatische ChatGPT-Sites-/Plugin-Verbindung ist **noch nicht gebaut oder veröffentlicht**. Die Sites-Einrichtungs- und Veröffentlichungsskripte fehlen in der aktuellen Arbeitsumgebung. Der hier beschriebene Dateiweg ist die tatsächlich implementierte Alternative.
 
 ## Einfach starten
 
@@ -83,7 +99,7 @@ npm run github
 npm run github -- mein-lernpfad
 ```
 
-Der Helfer erstellt einen bereinigten temporären Checkout, schließt Zugangsdaten und Nutzerdaten aus und veröffentlicht ein **neues privates Repository**. Ein bereits bestehendes Repository wird nicht überschrieben. Der zugehörige GitHub-Workflow prüft Typen, Tests und Produktionsbuild. Die eigentliche Webanwendung benötigt weiterhin einen Node-/Docker-Host mit PostgreSQL und persistentem Dateispeicher, beispielsweise Render. Es wurde kein kostenpflichtiger Hostingdienst angelegt.
+Der Helfer erstellt einen bereinigten temporären Checkout, schließt Zugangsdaten und Nutzerdaten aus und veröffentlicht ein **neues privates Repository**. Ein bereits bestehendes Repository wird nicht überschrieben. Der zugehörige GitHub-Workflow prüft Typen, Tests und Produktionsbuild. Die eigentliche Webanwendung benötigt weiterhin einen Node-/Docker-Host mit PostgreSQL und persistentem Dateispeicher, beispielsweise Render. Ein Hostingkonto wurde noch nicht verbunden; es wurde kein kostenpflichtiger Dienst angelegt.
 
 ## Konfiguration
 
@@ -173,10 +189,9 @@ Details und tatsächliche Prüfergebnisse: `VALIDATION.md`.
 
 Die beobachteten hohen Meldungen für PDF.js und PostCSS sowie die KaTeX-Meldung wurden durch eine passende PDF.js-Version, deaktivierte dynamische PDF-Auswertung und aktualisierte Abhängigkeiten behoben. Die Produktionsabhängigkeiten melden derzeit noch drei mittlere Einträge derselben `mammoth → argparse → sprintf-js`-Kette. Diese wird vom Mammoth-Kommandozeilenprogramm benötigt; die Anwendung verwendet ausschließlich die Bibliothek. Es wurde kein veralteter Parser-Downgrade zur bloßen Unterdrückung der Meldung vorgenommen.
 
-
 ## Auf dem iPad mit GitHub Codespaces ausprobieren
 
-Das Projekt enthält eine `.devcontainer`-Konfiguration für einen Node.js-24-Codespace. Die Codespaces-Konfiguration wurde statisch geprüft. Ein tatsächlicher Codespace-Start wurde noch nicht verifiziert.
+Das Projekt enthält eine `.devcontainer`-Konfiguration für einen Node.js-24-Codespace. Die neue Codespaces-Konfiguration wurde statisch geprüft, aber noch nicht auf GitHub gestartet; der Quellcode liegt auf GitHub; ein tatsächlicher Codespace-Start wurde in dieser Arbeitsumgebung nicht ferngeprüft.
 
 1. Den bereinigten Projektinhalt in ein eigenes privates GitHub-Repository übernehmen und dieses für die ChatGPT-GitHub-Verbindung freigeben.
 2. Im Repository unter **Code → Codespaces** einen Codespace erstellen. Die Einrichtung installiert die Abhängigkeiten und legt die lokale Datenbankkonfiguration an.

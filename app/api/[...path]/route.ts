@@ -1,3 +1,4 @@
+import { exportForChatGPT, importChatGPTCourse } from "@/lib/course-transfer";
 import { allowedRequestOrigin } from "@/lib/request-origin.mjs";
 import {
   withAiUser,
@@ -247,6 +248,21 @@ async function handle(
       );
     }
     let w = await getWorkspace(uid);
+    if (route === "transfer/export" && req.method === "POST") {
+      return json(exportForChatGPT(w, await req.json()));
+    }
+    if (route === "transfer/import" && req.method === "POST") {
+      const raw = await req.text();
+      if (raw.length > 2000000)
+        throw new Error("Kursdatei zu groß (maximal 2 MB).");
+      let input;
+      try {
+        input = JSON.parse(raw);
+      } catch {
+        throw new Error("Bitte eine gültige JSON-Kursdatei importieren.");
+      }
+      return json(await mutate(uid, (w) => importChatGPTCourse(w, input)));
+    }
     if (route === "state" && req.method === "GET") {
       kickJobs();
       return json({ ...publicState(w), jobs: await userJobs(uid) });

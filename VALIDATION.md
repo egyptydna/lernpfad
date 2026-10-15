@@ -1,10 +1,18 @@
-# Validierung – Lernpfad 1.2
+# Validierung – Lernpfad 1.3
 
 Stand: 15. Oktober 2026.
 
+## Manueller ChatGPT-Dateiweg (1.3)
+
+Der HTTP-/Browserdurchlauf mit ausdrücklich leerem API-Schlüssel besteht: Upload und Textextraktion, Export, Import, Antwortbewertung und XP, Neustart mit erhaltenem Kurs und Antworten sowie Isolation zwischen zwei Konten. Im mobilen Chromium wurden der tatsächliche Dateidownload und Import über das Formular, die Navigation zum Kurs, fehlender horizontaler Überlauf und ausbleibende JavaScript-Seitenfehler geprüft.
+
+Neue Tests prüfen den Export ausgewählter eigener Seiten ohne Lernprofil, den belegten Kursimport, seine Idempotenz, lokal bewertbare Aufgaben und die Ablehnung fremder Quellen, erfundener Zitate und ungültiger Aufgaben. Der Import vergibt eigene IDs und verändert keine alten Antworten oder XP. Für diesen Weg wird kein API-Schlüssel benötigt.
+
+Die automatische ChatGPT-Sites-/Plugin-Verbindung ist weiterhin nicht eingerichtet. Insbesondere ist dies kein Nachweis einer automatischen Übertragung zwischen Website und Chat.
+
 ## Automatisierte Logik- und Parsertests
 
-19 Tests bestehen; davon drei neue Tests zur ChatGPT-Verbindung. Der bisherige Bestand umfasst 15 Tests für Lernlogik, Passwortprüfung, Quellenvalidierung, objektive Bewertung, Zuordnungen, konfigurierbare Beherrschungsgrenzen, TXT, DOCX, PDF und PPTX sowie mathematische Darstellung. Dazu kommt ein eigener Hintergrundtest für abgelaufene Prüfungen und die idempotente Übernahme verwaister Job-Leases.
+27 Tests bestehen, einschließlich fünf Tests zur Codespaces-Ursprungsprüfung und drei Tests zum Dateiweg. Der bisherige Bestand umfasst 15 Tests für Lernlogik, Passwortprüfung, Quellenvalidierung, objektive Bewertung, Zuordnungen, konfigurierbare Beherrschungsgrenzen, TXT, DOCX, PDF und PPTX sowie mathematische Darstellung. Dazu kommt ein eigener Hintergrundtest für abgelaufene Prüfungen und die idempotente Übernahme verwaister Job-Leases.
 
 PDF-Seiten ohne Textebene werden im Test tatsächlich gerendert und an einen kontrollierten Vision-Testanbieter übergeben. Bereits gelesene Seiten werden wiederverwendet. Ein PPTX-Test prüft eine vom Dateinamen abweichende Präsentationsreihenfolge einschließlich Sprechernotizen und Diagrammdaten. KaTeX wird sowohl direkt als auch durch die tatsächliche Markdown-/Remark-/Rehype-Pipeline geprüft.
 

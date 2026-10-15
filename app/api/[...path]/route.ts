@@ -1,3 +1,4 @@
+import { allowedRequestOrigin } from "@/lib/request-origin.mjs";
 import {
   withAiUser,
   chatGPTStatus,
@@ -112,15 +113,21 @@ async function handle(
   try {
     const route = (await ctx.params).path.join("/");
     if (req.method !== "GET") {
-      const origin = req.headers.get("origin");
-      const requestURL = new URL(req.url);
-      const expectedOrigin =
-        process.env.APP_ORIGIN ||
-        requestURL.protocol +
-          "//" +
-          (req.headers.get("host") || requestURL.host);
-      if (origin && origin !== expectedOrigin)
-        return json({ error: "Ungültiger Ursprung." }, 403);
+      if (
+        !allowedRequestOrigin({
+          origin: req.headers.get("origin"),
+          requestURL: req.url,
+          host: req.headers.get("host"),
+          forwardedHost: req.headers.get("x-forwarded-host"),
+        })
+      )
+        return json(
+          {
+            error:
+              "Ungültiger Ursprung. Bitte die aktuelle Lernpfad-Adresse öffnen und erneut versuchen.",
+          },
+          403,
+        );
     }
     if (route === "health" && req.method === "GET") {
       await (await db()).query("SELECT 1");

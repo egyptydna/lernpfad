@@ -6,7 +6,7 @@
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start --hostname 0.0.0.0",
-    "test": "node --import tsx tests/learning.test.ts && node --import tsx tests/jobs.test.ts && node --import tsx tests/chatgpt.test.ts",
+    "test": "node --import tsx tests/learning.test.ts && node --import tsx tests/jobs.test.ts && node --import tsx tests/chatgpt.test.ts && node --import tsx tests/request-origin.test.ts",
     "typecheck": "tsc --noEmit",
     "test:integration": "node tests/integration.mjs",
     "setup": "node scripts/setup.mjs",
@@ -15,7 +15,8 @@
     "test:postgres": "node scripts/test-postgres.mjs",
     "docker": "node scripts/docker.mjs",
     "github": "node scripts/github.mjs",
-    "codespaces": "node scripts/codespaces.mjs"
+    "codespaces": "node scripts/codespaces.mjs",
+    "test:origin-http": "node tests/origin-http.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.3.0",

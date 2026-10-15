@@ -8,3 +8,5 @@ node_modules/
 .next-preview/
 .next-integration-*/
 .buildx/
+
+.next-origin-*/

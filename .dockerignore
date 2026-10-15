@@ -1,0 +1,11 @@
+node_modules
+.next*
+.data
+.env*
+!.env.example
+.git
+*.png
+*.tsbuildinfo
+.next-integration-*
+.buildx
+learning-*.png

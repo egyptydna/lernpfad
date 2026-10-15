@@ -1,0 +1,17 @@
+Grundlagen der Betriebswirtschaftslehre: Die Bilanz
+
+1. Die Bilanz
+Die Bilanz ist eine stichtagsbezogene Gegenüberstellung des Vermögens und des Kapitals eines Unternehmens. Die Aktivseite zeigt die Mittelverwendung, die Passivseite die Mittelherkunft. Die Summe beider Seiten ist immer gleich.
+
+2. Vermögen und Kapital
+Das Vermögen wird in Anlagevermögen und Umlaufvermögen unterteilt. Anlagevermögen dient dem Unternehmen langfristig, zum Beispiel Maschinen und Gebäude. Umlaufvermögen verbleibt kurzfristig im Unternehmen, zum Beispiel Vorräte und Bankguthaben.
+Auf der Passivseite stehen Eigenkapital und Fremdkapital. Eigenkapital ist der Anteil der Eigentümer am Unternehmen. Fremdkapital umfasst Verpflichtungen gegenüber Dritten.
+
+3. Bilanzgleichung
+Vermögen = Eigenkapital + Fremdkapital.
+Daraus folgt: Eigenkapital = Vermögen - Fremdkapital.
+Beispiel: Ein Unternehmen besitzt Vermögen von 100.000 Euro und Fremdkapital von 60.000 Euro. Das Eigenkapital beträgt 40.000 Euro.
+
+4. Eigenkapitalquote
+Die Eigenkapitalquote wird berechnet als Eigenkapital / Gesamtkapital × 100 Prozent.
+Bei 40.000 Euro Eigenkapital und 100.000 Euro Gesamtkapital beträgt die Eigenkapitalquote 40 Prozent. Die Quote zeigt den Anteil des Eigenkapitals an der gesamten Finanzierung.
